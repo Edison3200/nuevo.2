@@ -1,0 +1,104 @@
+{% extends 'layouts/base.html' %}
+
+{% block titulo %}
+    editar producto
+{% endblock%}
+
+{% block contenido %}
+    <a href="{{url_for('producto')}}" >volver</a>
+
+    <form method="POST">
+
+        
+       <div class="mb-3">
+           <label for="nombre">Nombre</label>
+           <input type="text" required class="form-control" id="nombre" name="nombre">
+       </div>
+
+       <div class="mb-3">
+
+           <label for="descripcion">Descripcion</label>
+           <input type="text" required class="form-control" id="descripcion" name="descripcion">
+       </div>
+
+       <div class="mb-3">
+
+           <label for="precio_compra">Precio de compra</label>
+           <input type="number" required class="form-control" id="precio_compra" name="precio_compra">
+
+       </div> 
+        
+       <div class="mb-3">   
+
+           <label for="precio_venta">Precio de venta</label>
+           <input type="number" required class="form-control" id="precio_venta" name="precio_venta">
+
+       </div>
+
+       <div class="mb-3">   
+
+        <label for="ganancia">ganancia (%)</label>
+        <input type="number" required class="form-control" id="ganancia" name="ganancia">
+
+    </div>
+
+       <div class="mb-3">
+
+           <label for="estado">Estado</label>
+           <!--<input type="int"  class="form-control" id="estado" name="estado"> -->
+           <select  class="form-select" required id="estado" name="estado">
+                <option selected value="">seleccioner un producto</option>
+                <option value="1">activo</option>
+                <option value="0">inactivo</option>
+            </select>
+
+       </div>
+
+
+
+       <button type="submit" class="btn btn-primary">Guardar</button>
+
+    </form>
+
+
+<script>
+   let inputPrecioCompra = document.querySelector('#precio_compra')
+   let inputPrecioVenta = document.querySelector('#precio_venta')
+   let inputganancia = document.querySelector('#ganancia')
+
+   inputPrecioCompra.addEventListener('keyup' ,cambioprecioCompra)
+    function cambioprecioCompra(e){
+        console.log("cambiando precio compra")
+   }
+
+
+   inputPrecioVenta.addEventListener('change' ,cambioprecioVenta)
+
+   function cambioprecioVenta(e){
+       // console.log("cambiando precio venta")
+
+       //let ganancia=(inputPrecioVenta.value - inputPrecioCompra.value ) / 100
+       let ganancia= ((inputPrecioVenta.value-inputPrecioCompra.value)/ inputPrecioCompra.value)*100
+       inputganancia.value = ganancia
+   }
+
+   inputganancia.addEventListener('change' ,cambioganancia)
+
+   function cambioganancia(e){
+
+      let venta1 = parseInt(  inputganancia.value ) 
+      let venta2 =parseInt(inputPrecioCompra.value)
+
+      let ventaf=(venta2*(venta1/100)+venta2)
+     
+      inputPrecioVenta.value = ventaf
+       
+   }
+
+
+
+</script>
+{% endblock%}
+
+
+
